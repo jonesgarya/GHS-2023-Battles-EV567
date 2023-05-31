@@ -1,6 +1,9 @@
 public class Grid
 {
     // Constants for number of rows and columns.
+    public static final int UNSET = -1;
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
     public static final int UNGUESSED = 0;
     public static final int HIT = 1;
     public static final int MISSED = 2;
@@ -84,25 +87,33 @@ public class Grid
         return NUM_COLS;
     }
     
-    // Print the Grid status including a header at the top
-    // that shows the columns 1-10 as well as letters across
-    // the side for A-J
-    // If there is no guess print a -
-    // If it was a miss print a O
-    // If it was a hit, print an X
-    // A sample print out would look something like this:
-    // 
-    //   1 2 3 4 5 6 7 8 9 10 
-    // A - - - - - - - - - - 
-    // B - - - - - - - - - - 
-    // C - - - O - - - - - - 
-    // D - O - - - - - - - - 
-    // E - X - - - - - - - - 
-    // F - X - - - - - - - - 
-    // G - X - - - - - - - - 
-    // H - O - - - - - - - - 
-    // I - - - - - - - - - - 
-    // J - - - - - - - - - - 
+    /**
+     * This method can be called on your own grid. To add a ship
+     * we will go to the ships location and mark a true value
+     * in every location that the ship takes up.
+     */
+    public void addShip(Ship s)
+    {
+        int length = s.getLength();
+        int direction = s.getDirection();
+        int row = s.getRow();
+        int col = s.getCol();
+        
+        if (direction == HORIZONTAL) 
+        {
+            for(int c = col; c < col + length; c++) 
+            {
+                setShip(row, c, true);
+            }
+        }
+        else 
+        {
+            for (int r = row; r < row + length; r++) 
+            {
+                setShip(r, col, true);
+            }
+        }
+    }
     
     public void printStatus()
     {
@@ -131,22 +142,7 @@ public class Grid
         }
     }
     
-    // Print the grid and whether there is a ship at each location.
-    // If there is no ship, you will print a - and if there is a
-    // ship you will print a X. You can find out if there was a ship
-    // by calling the hasShip method.
-    //
-    //   1 2 3 4 5 6 7 8 9 10 
-    // A - - - - - - - - - - 
-    // B - X - - - - - - - - 
-    // C - X - - - - - - - - 
-    // D - - - - - - - - - - 
-    // E X X X - - - - - - - 
-    // F - - - - - - - - - - 
-    // G - - - - - - - - - - 
-    // H - - - X X X X - X - 
-    // I - - - - - - - - X - 
-    // J - - - - - - - - X - 
+
    
     public void printShips()
     {
