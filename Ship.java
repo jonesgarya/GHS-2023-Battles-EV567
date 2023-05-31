@@ -1,27 +1,24 @@
 public class Ship
 {
-    private int row;
-    private int col;
-    private int length;
-    private int direction;
+    private int row = UNSET;
+    private int col = UNSET;
+    private int length = UNSET;
+    private int direction = UNSET;
       
     public static final int UNSET = -1;
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
     
     // Constructor. Create a ship and set the length.  
-    public Ship(int length)
+    public Ship(int theLength)
     {
-        this.length = length;
-        this.row = UNSET;
-        this.col = UNSET;
-        this.direction = UNSET;
+      length = theLength;
     }
       
     // Has the location been initialized
     public boolean isLocationSet()
     {
-        if (this.row == UNSET || this.col == UNSET)
+        if (row == -1 || col == -1)
         {
             return false;
         }
@@ -39,16 +36,16 @@ public class Ship
     }
     
     // Set the location of the ship 
-    public void setLocation(int row, int col)
+    public void setLocation(int r, int c)
     {
-        this.row = row;
-        this.col = col;
+        row = r;
+        col = c;
     }
     
     // Set the direction of the ship
-    public void setDirection(int direction)
+    public void setDirection(int d)
     {
-        this.direction = direction;
+        direction = d;
     }
     
     // Getter for the row value
@@ -86,9 +83,9 @@ public class Ship
         if(direction == VERTICAL)
         {
             return "vertical";
-        } 
-        return "unset direction";
+        }
         
+        return "unset";
     }
     
     // toString value for this Ship
