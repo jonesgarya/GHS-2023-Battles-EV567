@@ -1,5 +1,9 @@
 public class GridTester extends ConsoleProgram
 {
+    public static final int UNSET = -1;
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
+    
     public void run()
     {
         Grid g1 = new Grid();
@@ -21,17 +25,18 @@ public class GridTester extends ConsoleProgram
         
         g1.printStatus();
         System.out.println();
-        
         Grid g2 = new Grid();
-        g2.setShip(1,1,true);
-        g2.setShip(1,2,true);
-        g2.setShip(1,3,true);
-        g2.setShip(1,4,true);
-        g2.setShip(1,5,true);
-        g2.setShip(5,6,true);
-        g2.setShip(6,6,true);
-        g2.setShip(7,6,true);
+        
+        Ship s1 = new Ship(5);
+        s1.setLocation(1,1);
+        s1.setDirection(HORIZONTAL);
+        g2.addShip(s1);
+        
+        Ship s2 = new Ship(3);
+        s2.setLocation(5,6);
+        s2.setDirection(VERTICAL);
+        g2.addShip(s2);
+        
         g2.printShips();
-
     }
 }
