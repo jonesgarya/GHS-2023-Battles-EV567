@@ -1,58 +1,81 @@
 public class Player
 {
-    private static final int[] SHIP_LENGTHS = {2, 3, 3, 4, 5};
-    private static final int NUM_OF_SHIPS = 5;
-    private Ship[] ships;
-    private Grid myGrid = new Grid();
-    private Grid enemyGrid = new Grid(); 
-    private int shipCount = 0;
-
+    public static final int[] SHIP_LENGTHS = {2, 3, 3, 4, 5};
+    
+    private Ship[] myShips=new Ship[SHIP_LENGTHS.length];
+    
+    private Grid[] myGrids=new Grid[2];
+    
+    public int numShips=0;
     
     public Player()
     {
-        ships = new Ship[NUM_OF_SHIPS];
-        for(int i = 0; i < NUM_OF_SHIPS; i++)
+        for(int i=0;i<SHIP_LENGTHS.length;i++)
         {
-            ships[i] = new Ship(SHIP_LENGTHS[i]);
-        }
+            myShips[i]=new Ship(SHIP_LENGTHS[i]);
+        }    
+        
+        myGrids[0]=new Grid();
+        myGrids[1]=new Grid();
     }
     
     public void printMyShips()
     {
-        myGrid.printShips();
+        myGrids[0].printShips();
     }
     
     public void printOpponentGuesses()
     {
-        enemyGrid.printStatus();
+        myGrids[0].printStatus();
     }
     
     public void printMyGuesses()
     {
-        myGrid.printStatus();
+        myGrids[1].printStatus();
     }
     
-    public void chooseShipLocation(Ship ship, int row, int col, int direction)
+    public boolean validShip(int row,int col,int direction)
     {
-        if(shipCount < 5)
+        return myGrids[0].validShip(row, col, direction, SHIP_LENGTHS[numShips]);
+    }
+    
+    public void addShip(Ship s)
+    {
+        myGrids[0].addShip(s);
+        numShips++;
+    }
+    
+    public void chooseShipLocation(int row,int col,int direction)
+    {
+        if(numShips<5)
         {
-            ship.setLocation(row, col);
-            ship.setDirection(direction);
-            myGrid.addShip(ship);
-            shipCount++;
+            Ship s = myShips[numShips];
+            s.setLocation(row,col);
+            s.setDirection(direction);
+            myGrids[0].addShip(s);
+            numShips++;
         }
     }
     
-    public void recordOpponentGuess(int row, int col){
-        if(myGrid.hasShip(row, col))
+    public boolean alreadyGuessed(int row, int col)
+    {
+        return myGrids[0].getStatus(row,col)!=0;
+    }
+    
+    public boolean win()
+    {
+        return myGrids[0].win();
+    }
+    
+    public void recordOpponentGuess(int a,int b)
+    {
+        if(myGrids[0].hasShip(a,b))
         {
-            enemyGrid.markHit(row, col);
+            myGrids[0].markHit(a,b);
         }
         else
         {
-            enemyGrid.markMiss(row, col);
+            myGrids[0].markMiss(a,b);
         }
     }
-    
-    
 }
