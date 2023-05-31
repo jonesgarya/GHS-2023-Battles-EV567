@@ -74,10 +74,28 @@ public class Battleship extends ConsoleProgram
                     players[0].recordOpponentGuess(row, col);
                 }
             }
+            sleep(1000);
+            System.out.println("Opponent's guesses:");
+            players[0].printOpponentGuesses();
+            sleep(1000);
+            System.out.println("Your ships:");
+            players[0].printMyShips();
+            sleep(1000);
+            if(players[0].win())
+            {
+                System.out.println("Sorry, you lose.");
+            }
         }
         
     }
     
+    //delay function
+    void sleep(int time)
+    {
+       try {
+            Thread.sleep(time);
+         } catch (Exception e) {} 
+    }
     
     //Gets the users guess and makes sure they enter a valid guess
     void askForGuess()
