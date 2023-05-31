@@ -15,6 +15,37 @@ public class Grid
     private Location[][] grid = new Location[NUM_ROWS][NUM_COLS];
     // Create a new Grid. Initialize each Location in the grid
     // to be a new Location object.
+    
+    public boolean validShip(int row, int col,int direction,int length)
+    {
+        for(int i=0;i<length;i++)
+        {
+            if(direction == 0&&col+length>NUM_COLS)
+            {
+                return false;
+            }
+            if(direction == 1&&row+length>NUM_ROWS)
+            {
+                return false;
+            }
+            if(direction == 0)
+            {
+                if(grid[row][col+i].hasShip())
+                {
+                    return false;
+                }
+            }
+            if(direction == 1)
+            {
+                if(grid[row+i][col].hasShip())
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
     public Grid()
     {
         for(int i = 0; i < NUM_ROWS; i++) 
@@ -142,7 +173,21 @@ public class Grid
         }
     }
     
-
+    public boolean win()
+    {
+        for(int i=0;i<NUM_ROWS;i++)
+        {
+            for(int j=0;j<NUM_COLS;j++)
+            {
+                if(grid[i][j].hasShip())
+                {
+                    if(grid[i][j].getStatus()==0)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
    
     public void printShips()
     {
